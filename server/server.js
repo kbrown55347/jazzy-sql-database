@@ -68,17 +68,34 @@ app.listen(PORT, () => {
 app.get('/artist', (req, res) => {
     const sqlText = 'SELECT * FROM artist ORDER BY birthdate DESC;'
     pool.query(sqlText)
-    .then((dbRes) => {
-        const artistsFromDb = dbRes.rows;
-        res.send(artistsFromDb);
-    }).catch((dbErr) => {
-        console.error(dbErr);
-    });
+        .then((dbRes) => {
+            const artistsFromDb = dbRes.rows;
+            res.send(artistsFromDb);
+        }).catch((dbErr) => {
+            console.error(dbErr);
+        });
 });
 
 app.post('/artist', (req, res) => {
-    artistList.push(req.body);
-    res.sendStatus(201);
+    const newArtist = req.body;
+    const sqlText = (`
+        INSERT INTO "artist"
+            ("name", "birthdate")
+        VALUES
+            ($1, $2);
+    `);
+    const sqlValues = [
+        newArtist.name,
+        newArtist.birthdate
+    ];
+    console.log(sqlText);
+    pool.query(sqlText, sqlValues)
+        .then((dbRes) => {
+            res.sendStatus(201);
+        })
+        .catch((dbErr) => {
+            console.error(dbErr);
+    });
 });
 
 app.get('/song', (req, res) => {

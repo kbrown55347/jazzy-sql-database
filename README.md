@@ -39,7 +39,7 @@ Using the ERD above:
 ### Update the Server-side Code
 
 - [x] Install `pg` and setup your `pool` to connect to the database.
-- [ ] Update the `\artist` GET route to get data from the database. Sort the data by birthdate, youngest to oldest.
+- [x] Update the `\artist` GET route to get data from the database. Sort the data by birthdate, youngest to oldest.
 - [ ] Update the `\artist` POST route to store data in the database. 
 - [ ] Update the `\song` GET route to get data from the database. Sort the data by title.
 - [ ] Update the `\song` POST route to store data in the database.  
