@@ -66,7 +66,8 @@ app.listen(PORT, () => {
 // ];
 
 app.get('/artist', (req, res) => {
-    const sqlText = 'SELECT * FROM artist ORDER BY birthdate DESC;'
+    const sqlText = `SELECT * FROM artist 
+        ORDER BY birthdate DESC;`
     pool.query(sqlText)
         .then((dbRes) => {
             const artistsFromDb = dbRes.rows;
@@ -99,8 +100,15 @@ app.post('/artist', (req, res) => {
 });
 
 app.get('/song', (req, res) => {
-    console.log(`In /songs GET`);
-    res.send(songList);
+    const sqlText = `SELECT * FROM song 
+        ORDER BY title;`
+    pool.query(sqlText)
+        .then((dbRes) => {
+            const songsFromDb = dbRes.rows;
+            res.send(songsFromDb);
+        }).catch((dbErr) => {
+            console.log(dbErr);
+        });
 });
 
 app.post('/song', (req, res) => {
